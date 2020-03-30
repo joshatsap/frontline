@@ -15,8 +15,8 @@ class BasicSimulation extends Simulation {
   val httpConf = http
     .baseUrl("http://computer-database.gatling.io")
 
-  val scn = scenario("scenario1").during(600)
-    .exec(
+  val scn = scenario("scenario1").during(600,"Test") {
+    exec(
       http("Page 0")
         .get("/computers?p=0")
     )
@@ -25,6 +25,8 @@ class BasicSimulation extends Simulation {
       http("Page 1")
         .get("/computers?p=1")
     )
+	.pause(5)
+	}
 
   setUp(
     scn.inject(rampUsers(10) during (10 seconds))
